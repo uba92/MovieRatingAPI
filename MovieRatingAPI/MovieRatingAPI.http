@@ -1,6 +1,13 @@
-@MovieRatingAPI_HostAddress = http://localhost:5140
+@MovieRatingAPI_HostAddress = https://localhost:7195
 
-GET {{MovieRatingAPI_HostAddress}}/weatherforecast/
-Accept: application/json
+###
+
+POST {{MovieRatingAPI_HostAddress}}/api/movies
+Content-Type: application/json
+
+{
+  "Title": "Inception",
+  "Rating": 8
+}
 
 ###

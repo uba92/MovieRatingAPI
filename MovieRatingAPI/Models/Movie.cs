@@ -6,6 +6,6 @@ namespace MovieRatingAPI.Models
     {
         public long Id { get; set; }
         public string? Title { get; set; }
-        public int rating { get; set; }
+        public int Rating { get; set; }
     }
 }
