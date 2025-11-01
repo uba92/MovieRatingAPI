@@ -22,14 +22,14 @@ namespace MovieRatingAPI.Controllers
 
         // GET: api/Movies
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Movie>>> GetMovies()
+        public async Task<ActionResult<IEnumerable<MovieDTO>>> GetMovies()
         {
-            return await _context.Movies.ToListAsync();
+            return await _context.Movies.Select(x => MovieToDTO(x)).ToListAsync();
         }
 
         // GET: api/Movies/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Movie>> GetMovie(long id)
+        public async Task<ActionResult<MovieDTO>> GetMovie(long id)
         {
             var movie = await _context.Movies.FindAsync(id);
 
@@ -38,35 +38,35 @@ namespace MovieRatingAPI.Controllers
                 return NotFound();
             }
 
-            return movie;
+            return MovieToDTO(movie);
         }
 
         // PUT: api/Movies/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMovie(long id, Movie movie)
+        public async Task<IActionResult> PutMovie(long id, MovieDTO movieDto)
         {
-            if (id != movie.Id)
+            if (id != movieDto.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(movie).State = EntityState.Modified;
+            var movie = await _context.Movies.FindAsync(id);
+            if(movie == null)
+            {
+                return NotFound();
+            }
+
+            movie.Title = movieDto.Title;
+            movie.Rating = movieDto.Rating;
 
             try
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException) when (!MovieExists(id))
             {
-                if (!MovieExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
             return NoContent();
@@ -75,13 +75,20 @@ namespace MovieRatingAPI.Controllers
         // POST: api/Movies
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Movie>> PostMovie(Movie movie)
+        public async Task<ActionResult<MovieDTO>> PostMovie(MovieDTO movieDto)
         {
+
+            var movie = new Movie
+            {
+                Title = movieDto.Title,
+                Rating = movieDto.Rating
+            };
+
             _context.Movies.Add(movie);
             await _context.SaveChangesAsync();
 
             //return CreatedAtAction("GetMovie", new { id = movie.Id }, movie);
-            return CreatedAtAction(nameof(GetMovie), new { id = movie.Id }, movie);
+            return CreatedAtAction(nameof(GetMovie), new { id = movie.Id }, MovieToDTO(movie));
         }
 
         // DELETE: api/Movies/5
@@ -99,6 +106,15 @@ namespace MovieRatingAPI.Controllers
 
             return NoContent();
         }
+
+        // Converts a Movie to a MovieDTO
+        private static MovieDTO MovieToDTO(Movie movie) =>
+            new MovieDTO
+            {
+                Id = movie.Id,
+                Title = movie.Title,
+                Rating = movie.Rating
+            };
 
         private bool MovieExists(long id)
         {

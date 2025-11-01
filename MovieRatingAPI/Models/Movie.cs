@@ -7,5 +7,7 @@ namespace MovieRatingAPI.Models
         public long Id { get; set; }
         public string? Title { get; set; }
         public int Rating { get; set; }
+
+        public string? Secret { get; set; }
     }
 }
