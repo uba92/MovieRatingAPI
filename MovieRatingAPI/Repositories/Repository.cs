@@ -6,7 +6,7 @@ namespace MovieRatingAPI.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly MovieContext _context;
+        protected readonly MovieContext _context;
 
         public Repository(MovieContext context)
         {
