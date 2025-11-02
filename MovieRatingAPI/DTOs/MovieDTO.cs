@@ -1,4 +1,4 @@
-﻿namespace MovieRatingAPI.Models
+﻿namespace MovieRatingAPI.DTOs
 {
     public class MovieDTO
     {
