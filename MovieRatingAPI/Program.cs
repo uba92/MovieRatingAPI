@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using MovieRatingAPI.Interfaces;
 using MovieRatingAPI.Models;
 using MovieRatingAPI.Repositories;
+using MovieRatingAPI.Services;
 using NuGet.Protocol.Core.Types;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<MovieContext>(o => o.UseInMemoryDatabase("MovieRating"));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
+builder.Services.AddScoped<IMovieService, MovieService>();
 
 var app = builder.Build();
 
