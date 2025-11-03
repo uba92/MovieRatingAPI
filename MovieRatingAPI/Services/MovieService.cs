@@ -47,7 +47,7 @@ namespace MovieRatingAPI.Services
             return MoviesToDTOS(movies);
         }
 
-        public async Task<MovieReadDTO> UpdateAsync(long id, MovieUpdateDTO movieDTO)
+        public async Task<MovieReadDTO?> UpdateAsync(long id, MovieUpdateDTO movieDTO)
         {
             var movie = await _movieRepository.GetByIdAsync(id);
 
