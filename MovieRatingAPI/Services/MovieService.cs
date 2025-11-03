@@ -78,6 +78,12 @@ namespace MovieRatingAPI.Services
             return true;
         }
 
+        public async Task<IEnumerable<MovieReadDTO>> GetTopRatedAsync()
+        {
+            var movies = await _movieRepository.GetTopRatedAsync();
+            return MoviesToDTOS(movies);
+        }
+
         private static MovieReadDTO MovieToDTO(Movie movie) => new MovieReadDTO
         {
             Id = movie.Id,
