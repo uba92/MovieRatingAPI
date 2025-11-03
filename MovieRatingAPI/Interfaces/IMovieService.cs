@@ -6,7 +6,7 @@ namespace MovieRatingAPI.Interfaces
     {
         Task<IEnumerable<MovieReadDTO>> GetAllAsync();
         Task<MovieReadDTO?> GetByIdAsync(long id);
-        Task<MovieReadDTO> CreateAsync(MovieReadDTO movieDTO);
+        Task<MovieReadDTO> CreateAsync(MovieCreateDTO movieDTO);
         Task<MovieReadDTO?> UpdateAsync(long id, MovieUpdateDTO movieDTO);
         Task<bool> DeleteAsync(long id);
 
