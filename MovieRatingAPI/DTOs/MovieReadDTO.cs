@@ -1,6 +1,6 @@
 ﻿namespace MovieRatingAPI.DTOs
 {
-    public class MovieDTO
+    public class MovieReadDTO
     {
         public long Id { get; set; }
         public string? Title { get; set; }

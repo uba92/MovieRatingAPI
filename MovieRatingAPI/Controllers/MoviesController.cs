@@ -23,14 +23,14 @@ namespace MovieRatingAPI.Controllers
 
         // GET: api/Movies
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MovieDTO>>> GetMovies()
+        public async Task<ActionResult<IEnumerable<MovieReadDTO>>> GetMovies()
         {
             return await _context.Movies.Select(x => MovieToDTO(x)).ToListAsync();
         }
 
         // GET: api/Movies/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<MovieDTO>> GetMovie(long id)
+        public async Task<ActionResult<MovieReadDTO>> GetMovie(long id)
         {
             var movie = await _context.Movies.FindAsync(id);
 
@@ -45,7 +45,7 @@ namespace MovieRatingAPI.Controllers
         // PUT: api/Movies/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMovie(long id, MovieDTO movieDto)
+        public async Task<IActionResult> PutMovie(long id, MovieReadDTO movieDto)
         {
             if (id != movieDto.Id)
             {
@@ -76,7 +76,7 @@ namespace MovieRatingAPI.Controllers
         // POST: api/Movies
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<MovieDTO>> PostMovie(MovieDTO movieDto)
+        public async Task<ActionResult<MovieReadDTO>> PostMovie(MovieReadDTO movieDto)
         {
 
             var movie = new Movie
@@ -109,8 +109,8 @@ namespace MovieRatingAPI.Controllers
         }
 
         // Converts a Movie to a MovieDTO
-        private static MovieDTO MovieToDTO(Movie movie) =>
-            new MovieDTO
+        private static MovieReadDTO MovieToDTO(Movie movie) =>
+            new MovieReadDTO
             {
                 Id = movie.Id,
                 Title = movie.Title,

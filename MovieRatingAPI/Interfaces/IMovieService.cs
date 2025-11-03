@@ -4,12 +4,12 @@ namespace MovieRatingAPI.Interfaces
 {
     public interface IMovieService
     {
-        Task<IEnumerable<MovieDTO>> GetAllAsync();
-        Task<MovieDTO?> GetByIdAsync(long id);
-        Task<MovieDTO> CreateAsync(MovieDTO movieDTO);
-        Task<MovieDTO?> UpdateAsync(long id, MovieDTO movieDTO);
+        Task<IEnumerable<MovieReadDTO>> GetAllAsync();
+        Task<MovieReadDTO?> GetByIdAsync(long id);
+        Task<MovieReadDTO> CreateAsync(MovieReadDTO movieDTO);
+        Task<MovieReadDTO?> UpdateAsync(long id, MovieUpdateDTO movieDTO);
         Task<bool> DeleteAsync(long id);
 
-        Task<IEnumerable<MovieDTO>> GetTopRatedAsync();
+        Task<IEnumerable<MovieReadDTO>> GetTopRatedAsync();
     }
 }

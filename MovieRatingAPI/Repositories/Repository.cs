@@ -44,5 +44,10 @@ namespace MovieRatingAPI.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }
