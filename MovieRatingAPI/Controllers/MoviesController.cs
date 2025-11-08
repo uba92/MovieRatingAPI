@@ -46,10 +46,6 @@ namespace MovieRatingAPI.Controllers
         public async Task<ActionResult<MovieReadDTO>> UpdateMovie(long id, MovieUpdateDTO movie)
         {
             var updatedMovie = await _movieService.UpdateAsync(id, movie);
-            if(updatedMovie == null)
-            {
-                return NotFound();
-            }
 
             return Ok(updatedMovie);
         }
@@ -58,10 +54,6 @@ namespace MovieRatingAPI.Controllers
         public async Task<ActionResult> DeleteMovie(long id)
         {
             var result = await _movieService.DeleteAsync(id);
-            if(!result)
-            {
-                return NotFound();
-            }
 
             return NoContent();
         }

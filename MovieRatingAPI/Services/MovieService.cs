@@ -25,11 +25,17 @@ namespace MovieRatingAPI.Services
 
         public async Task<MovieReadDTO> CreateAsync(MovieCreateDTO movieDTO)
         {
+            if(await _movieRepository.ExistingByTitleAsync(movieDTO.Title))
+            {
+                throw new DuplicateTitleException("A movie with the same Title already exists.");
+            }
+
             var movie = new Movie
             {
                 Title = movieDTO.Title,
                 Rating = movieDTO.Rating
             };
+
             await _movieRepository.AddAsync(movie);
             await _movieRepository.SaveChangesAsync();
 
@@ -51,9 +57,11 @@ namespace MovieRatingAPI.Services
         {
             var movie = await _movieRepository.GetByIdAsync(id);
 
+
+
             if(movie == null)
             {
-                return null;
+                throw new NotFoundException($"Movie with id {id} not found.");
             }
 
             movie.Title = movieDTO.Title;
@@ -70,7 +78,7 @@ namespace MovieRatingAPI.Services
             var movie = await _movieRepository.GetByIdAsync(id);
             if(movie == null)
             {
-                return false;
+                throw new NotFoundException($"Movie with id {id} not found.");
             }   
 
             await _movieRepository.DeleteAsync(id);
