@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MovieRatingAPI.Interfaces;
+using MovieRatingAPI.Midlewares;
 using MovieRatingAPI.Models;
 using MovieRatingAPI.Repositories;
 using MovieRatingAPI.Services;
@@ -19,6 +20,8 @@ builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddScoped<IMovieService, MovieService>();
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

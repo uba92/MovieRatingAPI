@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using MovieRatingAPI.DTOs;
+using MovieRatingAPI.Exceptions;
 using MovieRatingAPI.Interfaces;
 using MovieRatingAPI.Models;
 using System.Security.Policy;
