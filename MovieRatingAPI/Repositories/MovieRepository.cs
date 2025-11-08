@@ -14,5 +14,10 @@ namespace MovieRatingAPI.Repositories
                 .OrderByDescending(m => m.Rating)
                 .ToListAsync();
         }
+        public async Task<bool> ExistingByTitleAsync(string title)
+        {
+            var normalizedTitle = title.Trim().ToLowerInvariant();
+            return await _context.Set<Movie>().AnyAsync(m => m.Title.ToLowerInvariant() == normalizedTitle);
+        }
     }
 }

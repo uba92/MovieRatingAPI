@@ -5,5 +5,6 @@ namespace MovieRatingAPI.Interfaces
     public interface IMovieRepository : IRepository<Movie>
     {
         Task<IEnumerable<Movie>> GetTopRatedAsync();
+        Task<bool> ExistingByTitleAsync(string title);
     }
 }

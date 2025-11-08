@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.WebSockets;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using MovieRatingAPI.DTOs;
 using MovieRatingAPI.Interfaces;
-using MovieRatingAPI.Models;
-using MovieRatingAPI.Services;
 
 namespace MovieRatingAPI.Controllers
 {
@@ -24,7 +15,6 @@ namespace MovieRatingAPI.Controllers
             _movieService = movieService;
         }
 
-        // GET: api/Movies
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MovieReadDTO>>> GetMovies()
         {
@@ -32,7 +22,6 @@ namespace MovieRatingAPI.Controllers
             return Ok(movies);
         }
 
-        //GET api/movies/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<MovieReadDTO>> GetMovie(long id)
         {
@@ -46,7 +35,6 @@ namespace MovieRatingAPI.Controllers
             return Ok(movie);
         }
 
-        //POST: api/movies
         [HttpPost]
         public async Task<ActionResult<MovieReadDTO>> CreateMovie(MovieCreateDTO movie)
         {
@@ -54,7 +42,6 @@ namespace MovieRatingAPI.Controllers
             return CreatedAtAction(nameof(GetMovie), new { id = createdMovie.Id }, createdMovie);
         }
 
-        //PUT: api/movies/{id}
         [HttpPut("{id}")]
         public async Task<ActionResult<MovieReadDTO>> UpdateMovie(long id, MovieUpdateDTO movie)
         {
@@ -67,7 +54,6 @@ namespace MovieRatingAPI.Controllers
             return Ok(updatedMovie);
         }
 
-        //DELETE: api/movies/{id}
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteMovie(long id)
         {
@@ -80,7 +66,6 @@ namespace MovieRatingAPI.Controllers
             return NoContent();
         }
 
-        //GET: api/movies/toprated
         [HttpGet("toprated")]
         public async Task<ActionResult<IEnumerable<MovieReadDTO>>> GetTopRated()
         {
