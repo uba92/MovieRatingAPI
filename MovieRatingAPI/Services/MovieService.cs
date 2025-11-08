@@ -19,7 +19,7 @@ namespace MovieRatingAPI.Services
             var movie = await _movieRepository.GetByIdAsync(id);
             if(movie == null)
             {
-                return null;
+                throw new NotFoundException($"Movie with id {id} not found.");
             }
             return MovieToDTO(movie);
         }
@@ -58,11 +58,17 @@ namespace MovieRatingAPI.Services
         {
             var movie = await _movieRepository.GetByIdAsync(id);
 
-
-
             if(movie == null)
             {
                 throw new NotFoundException($"Movie with id {id} not found.");
+            }
+
+            if(!string.Equals(movie.Title, movieDTO.Title, StringComparison.OrdinalIgnoreCase))
+            {
+                if(await _movieRepository.ExistingByTitleAsync(movieDTO.Title))
+                {
+                    throw new DuplicateTitleException("A movie with the same Title already exists.");
+                }
             }
 
             movie.Title = movieDTO.Title;

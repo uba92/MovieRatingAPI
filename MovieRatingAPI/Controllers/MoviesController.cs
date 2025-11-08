@@ -27,11 +27,6 @@ namespace MovieRatingAPI.Controllers
         {
             var movie = await _movieService.GetByIdAsync(id);
 
-            if(movie == null)
-            {
-                return NotFound();
-            }
-
             return Ok(movie);
         }
 
