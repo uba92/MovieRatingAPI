@@ -1,10 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using MovieRatingAPI.Interfaces;
-using MovieRatingAPI.Midlewares;
+using MovieRatingAPI.Middlewares;
 using MovieRatingAPI.Models;
 using MovieRatingAPI.Repositories;
 using MovieRatingAPI.Services;
-using NuGet.Protocol.Core.Types;
 
 var builder = WebApplication.CreateBuilder(args);
 

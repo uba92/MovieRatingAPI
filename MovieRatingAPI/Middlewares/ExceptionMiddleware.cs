@@ -2,7 +2,7 @@
 using System.Net;
 using System.Text.Json;
 
-namespace MovieRatingAPI.Midlewares
+namespace MovieRatingAPI.Middlewares
 {
     public class ExceptionMiddleware
     {
