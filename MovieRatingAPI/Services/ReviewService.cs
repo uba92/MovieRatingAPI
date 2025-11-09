@@ -24,7 +24,7 @@ namespace MovieRatingAPI.Services
                 var review = new Review
             {
                 MovieId = reviewDTO.MovieId,
-                Comment = reviewDTO.Comment,
+                Comment = reviewDTO.Comment.Trim(),
                 CreatedAt = DateTime.UtcNow
             };
 
@@ -72,7 +72,7 @@ namespace MovieRatingAPI.Services
             {
                 throw new NotFoundException($"Review with id {reviewId} not found.");
             }
-            review.Comment = reviewUpdateDTO.Comment;
+            review.Comment = reviewUpdateDTO.Comment.Trim();
             review.UpdatedAt = DateTime.UtcNow;
             await _reviewRepository.UpdateAsync(review);
             await _reviewRepository.SaveChangesAsync();
