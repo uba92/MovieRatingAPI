@@ -8,6 +8,8 @@ namespace MovieRatingAPI.Models
         public string Title { get; set; } = string.Empty;
         public int Rating { get; set; }
 
+        public ICollection<Review> Reviews { get; set; } = new List<Review>();
+
         public string? Secret { get; set; }
     }
 }
