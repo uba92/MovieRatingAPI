@@ -4,8 +4,20 @@ using MovieRatingAPI.Middlewares;
 using MovieRatingAPI.Models;
 using MovieRatingAPI.Repositories;
 using MovieRatingAPI.Services;
+using Serilog;
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.File(
+        "Logs/app.log",
+        rollingInterval: RollingInterval.Day,
+        retainedFileCountLimit: 7,
+        fileSizeLimitBytes: 10_000_000,
+        rollOnFileSizeLimit: true)
+    .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseSerilog();
 
 // Add services to the container.
 
