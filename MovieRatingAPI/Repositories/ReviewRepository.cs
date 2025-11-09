@@ -12,6 +12,7 @@ namespace MovieRatingAPI.Repositories
         {
             return await _context.Set<Review>()
                 .Where(r => r.MovieId == movieId)
+                .Include(r => r.Movie)
                 .ToListAsync();
         }
     }
