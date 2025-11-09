@@ -13,7 +13,8 @@ Log.Logger = new LoggerConfiguration()
         rollingInterval: RollingInterval.Day,
         retainedFileCountLimit: 7,
         fileSizeLimitBytes: 10_000_000,
-        rollOnFileSizeLimit: true)
+        rollOnFileSizeLimit: true,
+        shared: true)
     .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,6 +34,7 @@ builder.Services.AddScoped<IMovieService, MovieService>();
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();
+app.UseMiddleware<RequestLoggingMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
