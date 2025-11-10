@@ -85,7 +85,8 @@ namespace MovieRatingAPI.Services
             Comment = review.Comment,
             CreatedAt = review.CreatedAt,
             UpdatedAt = review.UpdatedAt,
-            MovieTitle = review.Movie?.Title
+            MovieTitle = review.Movie?.Title,
+            MovieID = review.MovieId
         };
 
         private static IEnumerable<ReviewReadDTO> ReviewsToDTOs(IEnumerable<Review> reviews)
@@ -96,7 +97,8 @@ namespace MovieRatingAPI.Services
                 Comment = review.Comment,
                 CreatedAt = review.CreatedAt,
                 UpdatedAt = review.UpdatedAt,
-                MovieTitle = review.Movie?.Title
+                MovieTitle = review.Movie?.Title,
+                MovieID = review.MovieId
             });
         }
     }

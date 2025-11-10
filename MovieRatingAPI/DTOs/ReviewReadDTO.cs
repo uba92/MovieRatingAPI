@@ -7,5 +7,6 @@
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; } 
         public string? MovieTitle { get; set; }
+        public long MovieID { get; set; }
     }
 }
