@@ -9,6 +9,7 @@ namespace MovieRatingAPI.Models
         }
         public DbSet<Movie> Movies { get; set; } = null!;
         public DbSet<Review> Reviews { get; set; } = null!;
+        public DbSet<User> Users { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -16,6 +17,9 @@ namespace MovieRatingAPI.Models
                 .WithMany(m => m.Reviews)
                 .HasForeignKey(r => r.MovieId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
         }
+
     }
 }
