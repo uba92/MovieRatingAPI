@@ -46,6 +46,11 @@ namespace MovieRatingAPI.Middlewares
                     message = exception.Message;
                     break;
 
+                case EmailAlreadyExistsException:
+                    statusCode = HttpStatusCode.Conflict;
+                    message = exception.Message;
+                    break;
+
                 default:
                     message = exception.Message;
                     break;

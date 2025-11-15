@@ -10,8 +10,6 @@ namespace MovieRatingAPI.Models
         public string Email { get; set; } = string.Empty;
         [Required]
         public string PasswordHash { get; set; } = string.Empty;
-        [Required]
-        public string PasswordSalt { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
     }

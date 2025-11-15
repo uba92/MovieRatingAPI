@@ -1,7 +1,10 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MovieRatingAPI.Interfaces;
+using MovieRatingAPI.Interfaces.Security;
 using MovieRatingAPI.Middlewares;
 using MovieRatingAPI.Models;
+using MovieRatingAPI.Models.Securtity;
 using MovieRatingAPI.Repositories;
 using MovieRatingAPI.Services;
 using Serilog;
@@ -32,6 +35,9 @@ builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IPasswordHasher, PasswordHasherV1>();
 
 var app = builder.Build();
 
