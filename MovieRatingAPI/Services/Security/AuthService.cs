@@ -47,10 +47,31 @@ namespace MovieRatingAPI.Services.Security
                 CreatedAt = createdUser.CreatedAt
             };
         }
-        public Task<LoginResponse> LoginAsync(LoginRequest request)
+        public async Task<LoginResponse> LoginAsync(LoginRequest request)
         {
+            string normalizedEmail = request.Email.Trim().ToLowerInvariant();
 
-            throw new NotImplementedException();
+            var user = await _authRepository.GetByEmailAsync(normalizedEmail);
+
+            if(user == null)
+            {
+                throw new BadHttpRequestException("Invalid credentials!");
+            }
+
+            bool validPassword = _passwordHasher.VerifyPassword(request.Password, user.PasswordHash);
+
+            if(!validPassword)
+            {
+                throw new BadHttpRequestException("Invalid credentials!");
+            }
+
+            string token = GenerateJwtToken(user);
+
+            return new LoginResponse
+            {
+                Token = token,
+                ExpiresIn = 3600
+            };
         }
 
         public string GenerateJwtToken(User user)
