@@ -1,6 +1,6 @@
 ﻿using MovieRatingAPI.DTOs.Auth;
 
-namespace MovieRatingAPI.Interfaces
+namespace MovieRatingAPI.Interfaces.Security
 {
     public interface IAuthService
     {

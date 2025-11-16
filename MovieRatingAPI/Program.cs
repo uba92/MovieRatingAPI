@@ -7,6 +7,7 @@ using MovieRatingAPI.Models;
 using MovieRatingAPI.Models.Securtity;
 using MovieRatingAPI.Repositories;
 using MovieRatingAPI.Services;
+using MovieRatingAPI.Services.Security;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
