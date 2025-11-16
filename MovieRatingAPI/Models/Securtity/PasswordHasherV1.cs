@@ -1,4 +1,5 @@
 ﻿using MovieRatingAPI.Interfaces.Security;
+using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -8,7 +9,8 @@ namespace MovieRatingAPI.Models.Securtity
     {
         private const int SaltSize = 32;
         private const int KeySize = 32;
-        private const int Iterations = 10000;
+        private const int Iterations = 100000;
+
         public string HashPassword(string password)
         {
             byte[] salt = RandomNumberGenerator.GetBytes(SaltSize);
@@ -21,9 +23,9 @@ namespace MovieRatingAPI.Models.Securtity
                 );
 
             string saltBase64 = Convert.ToBase64String(salt);
-            string hashhBase64 = Convert.ToBase64String(hash);
+            string hashBase64 = Convert.ToBase64String(hash);
 
-            return $"v=1;algo=pbkdf2;iter={Iterations};salt={saltBase64};hash={hashhBase64}";
+            return $"v=1;algo=pdkdf2;iter={Iterations};salt={saltBase64};hash={hashBase64}";
         }
 
         public bool VerifyPassword(string password, string storedHash)
@@ -36,17 +38,17 @@ namespace MovieRatingAPI.Models.Securtity
 
             int iterations = int.Parse(iterPart);
             byte[] salt = Convert.FromBase64String(saltPart);
-            byte[] hash = Convert.FromBase64String(hashPart);
+            byte[] expectedHash = Convert.FromBase64String(hashPart);
 
             byte[] actualHash = Rfc2898DeriveBytes.Pbkdf2(
                 Encoding.UTF8.GetBytes(password),
                 salt,
                 iterations,
                 HashAlgorithmName.SHA256,
-                hash.Length
+                expectedHash.Length
                 );
 
-            return CryptographicOperations.FixedTimeEquals(actualHash, hash);
+            return CryptographicOperations.FixedTimeEquals(actualHash,expectedHash);
         }
     }
 }
