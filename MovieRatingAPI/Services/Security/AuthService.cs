@@ -43,6 +43,7 @@ namespace MovieRatingAPI.Services.Security
         }
         public Task<LoginResponse> LoginAsync(LoginRequest request)
         {
+
             throw new NotImplementedException();
         }
     }
