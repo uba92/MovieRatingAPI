@@ -1,8 +1,12 @@
-﻿using MovieRatingAPI.DTOs.Auth;
+﻿using Microsoft.IdentityModel.Tokens;
+using MovieRatingAPI.DTOs.Auth;
 using MovieRatingAPI.Exceptions;
 using MovieRatingAPI.Interfaces;
 using MovieRatingAPI.Interfaces.Security;
 using MovieRatingAPI.Models;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace MovieRatingAPI.Services.Security
 {
@@ -10,11 +14,13 @@ namespace MovieRatingAPI.Services.Security
     {
         private readonly IAuthRepository _authRepository;
         private readonly IPasswordHasher _passwordHasher;
+        private readonly IConfiguration _configuration;
 
-        public AuthService(IAuthRepository authRepository, IPasswordHasher passwordHasher)
+        public AuthService(IAuthRepository authRepository, IPasswordHasher passwordHasher, IConfiguration configuration)
         { 
             _authRepository =  authRepository;
             _passwordHasher = passwordHasher;
+            _configuration = configuration;
         }
         public async Task<RegisterResponse> RegisterAsync(RegisterRequest request)
         {
@@ -45,6 +51,31 @@ namespace MovieRatingAPI.Services.Security
         {
 
             throw new NotImplementedException();
+        }
+
+        public string GenerateJwtToken(User user)
+        {
+            var jwtSettings = _configuration.GetSection("Jwt");
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]!));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
+            };
+
+            var expires = DateTime.UtcNow.AddMinutes(int.Parse(jwtSettings["ExpiresInMinutes"]!));
+
+            var token = new JwtSecurityToken(
+                issuer: jwtSettings["Issuer"],
+                audience: jwtSettings["Audience"],
+                claims: claims,
+                expires: expires,
+                signingCredentials: creds
+                );
+            
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }
