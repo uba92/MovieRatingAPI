@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MovieRatingAPI.DTOs;
 using MovieRatingAPI.Interfaces;
 
@@ -14,7 +15,7 @@ namespace MovieRatingAPI.Controllers
         {
             _movieService = movieService;
         }
-
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MovieReadDTO>>> GetMovies()
         {
