@@ -91,6 +91,25 @@ builder.Services.AddAuthentication(options =>
         ValidAudience = jwtSettings["Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(jwtSettings["Key"]!))
     };
+
+    options.Events = new JwtBearerEvents
+    {
+        OnChallenge = context =>
+        {
+            context.HandleResponse();
+            context.Response.StatusCode = 401;
+            context.Response.ContentType = "application/json";
+            return context.Response.WriteAsync(
+                "{\"error\": \"Accesso non autorizzato. Token JWT mancante o non valido.\"}");
+        },
+        OnForbidden = context =>
+        {
+            context.Response.StatusCode = 403;
+            context.Response.ContentType = "application/json";
+            return context.Response.WriteAsync(
+                "{\"error\": \"Accesso proibito. Non hai i permessi necessari per accedere a questa risorsa.\"}");
+        }
+    };
 });
 
 var app = builder.Build();
