@@ -30,7 +30,7 @@ namespace MovieRatingAPI.Controllers
 
             return Ok(movie);
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<MovieReadDTO>> CreateMovie(MovieCreateDTO movie)
         {

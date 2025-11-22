@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MovieRatingAPI.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace MovieRatingAPI.Models
 {
@@ -12,5 +13,6 @@ namespace MovieRatingAPI.Models
         public string PasswordHash { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
+        public UserRole Role { get; set; } = UserRole.User;
     }
 }
